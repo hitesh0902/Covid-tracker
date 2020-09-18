@@ -1,32 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { fetchCountries } from "../../api/api";
 
 interface Props {
-  countryChange: (event: { target: { value: any } }) => void;
+  countryChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  countries: string[];
 }
 
-interface data {
-  name: string;
-}
-
-type State = string[];
-
-const Country = (props: Props) => {
-  const [countries, setCountries] = useState<State | null>(null);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const countryApi = await fetchCountries();
-      const modifiedCountries = countryApi.map((country: data) => country.name);
-      setCountries(modifiedCountries);
-    };
-    fetch();
-  }, [setCountries]);
-
+const Country = ({ countries, countryChange }: Props) => {
   return (
     <div>
       <form>
-        <select onChange={props.countryChange}>
+        <select onChange={countryChange}>
           <option value="global">Global</option>
           {countries &&
             countries.map((country: string, index) => (

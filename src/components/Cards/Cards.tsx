@@ -3,10 +3,10 @@ import CountUp from "react-countup";
 import classes from "./Cards.module.scss";
 
 interface Props {
-  confirmed?: number;
-  recovered?: number;
-  deaths?: number;
-  lastUpdate?: string;
+  confirmed: number;
+  recovered: number;
+  deaths: number;
+  lastUpdate: string;
 }
 
 const Cards = (props: Props) => {
@@ -17,9 +17,7 @@ const Cards = (props: Props) => {
       <div className={classes.card}>
         <h2 className={classes.card__title}>Infected</h2>
         <p className={classes.card__data}>
-          {confirmed && (
-            <CountUp start={0} end={confirmed} duration={2.5} separator="," />
-          )}
+          <CountUp start={0} end={confirmed} duration={2} separator="," />
         </p>
 
         <p className={classes.card__date}>{lastUpdated}</p>
@@ -30,9 +28,7 @@ const Cards = (props: Props) => {
       <div className={classes.card}>
         <h2 className={classes.card__title}>Recovered</h2>
         <p className={classes.card__data}>
-          {recovered && (
-            <CountUp start={0} end={recovered} duration={2.5} separator="," />
-          )}
+          <CountUp start={0} end={recovered} duration={2} separator="," />
         </p>
         <p className={classes.card__date}>{lastUpdated}</p>
         <p className={classes.card__about}>
@@ -42,9 +38,7 @@ const Cards = (props: Props) => {
       <div className={classes.card}>
         <h2 className={classes.card__title}>Deaths</h2>
         <p className={classes.card__data}>
-          {deaths && (
-            <CountUp start={0} end={deaths} duration={2.5} separator="," />
-          )}
+          <CountUp start={0} end={deaths} duration={2} separator="," />
         </p>
         <p className={classes.card__date}>{lastUpdated}</p>
         <p className={classes.card__about}>
