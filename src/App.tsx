@@ -30,12 +30,13 @@ interface CountryData {
   name: string;
 }
 
-type CountryState = string[];
+type CountriesState = string[];
 
 function App() {
   const [data, setData] = useState<DataState | null>(null);
   const [dailyData, setDailyData] = useState<DailyDataState | null>(null);
-  const [countries, setCountries] = useState<CountryState | null>(null);
+  const [countries, setCountries] = useState<CountriesState | null>(null);
+  const [country, setCountry] = useState<string>("global");
 
   useEffect(() => {
     const fetchedData = async () => {
@@ -73,6 +74,7 @@ function App() {
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const country = event.target.value;
+    setCountry(country);
 
     if (country !== "global") {
       const fetchedCountryData = await fetchData(country);
@@ -81,7 +83,6 @@ function App() {
       setData(await fetchData());
     }
   };
-
   return (
     <div className={classes.App}>
       <img
@@ -100,7 +101,9 @@ function App() {
       {countries && (
         <Country countryChange={handleCountryChange} countries={countries} />
       )}
-      {dailyData && <Chart dailyData={dailyData} />}
+      {dailyData && data && (
+        <Chart dailyData={dailyData} data={data} country={country} />
+      )}
     </div>
   );
 }

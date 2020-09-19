@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import classes from "./Chart.module.scss";
-import { Line } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 
 interface DailyDataObj {
   confirmed: number;
@@ -10,9 +10,21 @@ interface DailyDataObj {
 
 interface Props {
   dailyData: DailyDataObj[];
+  data: {
+    confirmed: { value: number };
+    recovered: { value: number };
+    deaths: { value: number };
+    lastUpdate: string;
+  };
+  country: string;
 }
 
-const Chart = ({ dailyData }: Props) => {
+const Chart = (props: Props) => {
+  const {
+    dailyData,
+    data: { confirmed, recovered, deaths },
+    country,
+  } = props;
   const lineChart = dailyData ? (
     <Line
       data={{
@@ -36,6 +48,29 @@ const Chart = ({ dailyData }: Props) => {
     />
   ) : null;
 
-  return <div className={classes.container}>{lineChart}</div>;
+  const barChart = confirmed ? (
+    <Bar
+      data={{
+        labels: ["Infected", "Recovered", "Deaths"],
+        datasets: [
+          {
+            label: "People",
+            backgroundColor: [
+              "rgba(0,0,255, 0.5)",
+              "rgba(0,255,0, 0.5)",
+              "rgba(255,0,0, 0.5)",
+            ],
+            data: [confirmed.value, recovered.value, deaths.value],
+          },
+        ],
+      }}
+      options={{ legend: { display: false } }}
+    />
+  ) : null;
+  return (
+    <div className={classes.container}>
+      {country === "global" ? lineChart : barChart}
+    </div>
+  );
 };
 export default Chart;

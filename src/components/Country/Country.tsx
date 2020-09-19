@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import classes from "./Country.module.scss";
 
 interface Props {
   countryChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -9,7 +10,7 @@ const Country = ({ countries, countryChange }: Props) => {
   return (
     <div>
       <form>
-        <select onChange={countryChange}>
+        <select onChange={countryChange} className={classes.select}>
           <option value="global">Global</option>
           {countries &&
             countries.map((country: string, index) => (
